@@ -21,8 +21,21 @@
 * 如果没有报错，结果如下图就是成功了
 
 ![image](https://user-images.githubusercontent.com/5336757/153746634-9c9fac70-b5fc-4ab9-8d9c-8c9f3f360c53.png)
+![image](https://user-images.githubusercontent.com/5336757/153749630-86758665-a360-49ac-bd29-2a8f8aff4027.png)
+
 
 * 双击sln,打开vs.打开sln工程后就可以得到一个新的默认应用。这个应用会共享 原本的Source目录下的 Programs和 ThirdParty 以及插件目录。 
   修改一下解决方案配置（选择后面带App的）和解决方案平台（win64)。选择启动项目TestApp，启动调试器，经过一段长时间的编译，就会得到一个默认的虚幻引擎编辑器。
   
   ![image](https://user-images.githubusercontent.com/5336757/153746762-63429b28-d2f7-45cf-925a-ed7a4e075362.png)
+  
+## 注意事项
+  原本的UnrealEditor目标默认是编译所有模块及插件的，十分耗费时间。为了减少编译时间，在TestApp.build.cs里 设置了	bBuildAllModules = false;
+  并修改了ubt内部代码，使新目标默认是只加载相关模块。
+  新添加了一种加载插件的方式。通过设置bBuildAllPlugins = false; 目标会不一下加载所有插件。而是通过给 EnablePlugins这个变量容器添加插件名 来指定需要加载的插件。
+  比如当编辑器打开 uproject工程时，一般会要求编辑器程序中包含 uproject里设置的插件模块。这时可以通过在TestApp.build.cs中添加 给 EnablePlugins 添加模块来解决这个问题。
+  即可以选择像原有的一样加载所有插件，也可以指定需要的一些插件加载，减少编译时间。这个地方根据自己的需要进行修改。
+  
+  ![image](https://user-images.githubusercontent.com/5336757/153750442-fd4f5d09-a000-4565-a536-a759e97d06d6.png)
+
+
