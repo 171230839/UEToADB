@@ -15,9 +15,11 @@
   这个脚本会对Engine目录下的源码进行一次行的修改。 主要是修改模块设置文件（*build.cs）里的目录引用路径。
   
 * 使用控制台运行 GenerateProjectFilesNew.bat, （新源码目录名和sln文件名），就会在 Engine 目录下 创建一个新源码目录，并将 Runtime，Develop， Editor 三个目录拷贝复制过去，并生成新的sln。
-  ![image](https://user-images.githubusercontent.com/5336757/153746555-c5210cb5-1097-4e47-b146-978a2828cbb3.png)
+
+![image](https://user-images.githubusercontent.com/5336757/153746555-c5210cb5-1097-4e47-b146-978a2828cbb3.png)
   如果没有报错，结果如下图就是成功了
-  ![image](https://user-images.githubusercontent.com/5336757/153746634-9c9fac70-b5fc-4ab9-8d9c-8c9f3f360c53.png)
+
+![image](https://user-images.githubusercontent.com/5336757/153746634-9c9fac70-b5fc-4ab9-8d9c-8c9f3f360c53.png)
   双击sln,打开vs.打开sln工程后就可以得到一个新的默认应用。这个应用会共享 原本的Source目录下的 Programs和 ThirdParty 以及插件目录。 
   修改一下解决方案配置（选择后面带App的）和解决方案平台（win64)。选择启动项目TestApp，启动调试器，经过一段长时间的编译，就会得到一个默认的虚幻引擎编辑器。
   ![image](https://user-images.githubusercontent.com/5336757/153746762-63429b28-d2f7-45cf-925a-ed7a4e075362.png)
