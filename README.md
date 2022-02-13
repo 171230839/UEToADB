@@ -6,7 +6,7 @@
 最终到达的效果是，控制调用脚本（GenerateProjectFilesNew.bat) 传入2个参数（新源码目录名和sln文件名），就会在 Engine 目录下 创建一个新源码目录，并将 Runtime，Develop， Editor 三个目录拷贝复制过去，并生成新的sln。打开sln后就可以得到一个新的默认应用。
 
 ## 使用步骤 （windows下ue5示例)
-* 按照虚幻引擎官方教程，下载源码。运行setup.bat安装依赖，运行GenerateProjectFiles.bat得到默认sln文件。
+* 按照虚幻引擎官方教程，下载源码。运行setup.bat安装依赖。
 
 * 拷贝覆盖本仓库UnrealBuildTool文件夹到 /Engine/Source/Programs/UnrealBuildTool.
   主要改动都在ubt里面，使用ue5代码做的测试。其他版本可参照修改。
