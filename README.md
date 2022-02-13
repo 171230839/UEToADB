@@ -19,7 +19,7 @@
 ![image](https://user-images.githubusercontent.com/5336757/153746555-c5210cb5-1097-4e47-b146-978a2828cbb3.png)
   
 * 如果没有报错，结果如下图就是成功了
-* 
+
 ![image](https://user-images.githubusercontent.com/5336757/153746634-9c9fac70-b5fc-4ab9-8d9c-8c9f3f360c53.png)
 
 * 双击sln,打开vs.打开sln工程后就可以得到一个新的默认应用。这个应用会共享 原本的Source目录下的 Programs和 ThirdParty 以及插件目录。 
