@@ -150,7 +150,18 @@ if __name__ == "__main__":
         replace_string='#include "',
         search_only=False,
         file_filter=("*.*",))        
-
+        SearchAndReplace(search_path=path, search_string='Path.Combine(EnginePath, "Source/',
+        replace_string='Path.Combine(EngineSourceDir, "',
+        search_only=False,
+        file_filter=("*.build.cs",))   
+        SearchAndReplace(search_path=path, search_string='Path.Combine(EngineDir, "Source/',
+        replace_string='Path.Combine(EngineSourceDir, "',
+        search_only=False,
+        file_filter=("*.build.cs",))   
+        SearchAndReplace(search_path=path, search_string='Target.Type == TargetRules.TargetType.Editor',
+        replace_string='Target.Type == TargetType.Editor || Target.Type == TargetType.App',
+        search_only=False,
+        file_filter=("*.build.cs",))
 
     path = "./Engine/Plugins"
     SearchAndReplace(search_path=path, search_string='"../../../../Source/Runtime',
@@ -161,6 +172,63 @@ if __name__ == "__main__":
     replace_string='ThirdPartyDir + "',
     search_only=False,
     file_filter=("*.build.cs",))
+    SearchAndReplace(search_path=path, search_string='"../../../../../../Source/',
+    replace_string='EngineSourceDir + "',
+     search_only=False,
+    file_filter=("*.build.cs",))
+
+    SearchAndReplace(search_path=path, search_string='"../../../../Source/',
+    replace_string='EngineSourceDir + "',
+     search_only=False,
+    file_filter=("*.build.cs",))
+
+    SearchAndReplace(search_path=path, search_string='"../../../../../Source/',
+    replace_string='EngineSourceDir + "',
+     search_only=False,
+    file_filter=("*.build.cs",))
+
+    SearchAndReplace(search_path=path, search_string='Target.Type == TargetType.Editor',
+    replace_string='Target.Type == TargetType.Editor || Target.Type == TargetType.App',
+    search_only=False,
+    file_filter=("*.build.cs",))
+
+    SearchAndReplace(search_path=path, search_string='Target.Type == TargetRules.TargetType.Editor',
+    replace_string='Target.Type == TargetType.Editor || Target.Type == TargetType.App',
+    search_only=False,
+    file_filter=("*.build.cs",))
+
+    SearchAndReplace(search_path=path, search_string='Path.Combine(EngineDir, "Source/',
+    replace_string='Path.Combine(EngineSourceDir, "',
+    search_only=False,
+    file_filter=("*.build.cs",))   
+
+    SearchAndReplace(search_path=path, search_string='Path.Combine(EngineSourceDirectory, "Runtime',
+    replace_string='Path.Combine(EngineSourceDir, "Runtime',
+    search_only=False,
+    file_filter=("*.build.cs",))   
+
+
+    SearchAndReplace(search_path=path, search_string='Path.Combine(EngineSourceDirectory, "Developer',
+    replace_string='Path.Combine(EngineSourceDir, "Runtime',
+    search_only=False,
+    file_filter=("*.build.cs",))   
+
+    SearchAndReplace(search_path=path, search_string='Path.Combine(EngineSourceDirectory, "Editor',
+    replace_string='Path.Combine(EngineSourceDir, "Editor',
+    search_only=False,
+    file_filter=("*.build.cs",))   
+
+    SearchAndReplace(search_path=path, search_string='Path.Combine(EngineSourceDirectory, "Editor',
+    replace_string='Path.Combine(EngineSourceDir, "Editor',
+    search_only=False,
+    file_filter=("*.build.cs",))   
+    
+
+    SearchAndReplace(search_path=path, search_string='EngineDirectory + "/Source/',
+    replace_string='EngineSourceDir + "',
+    search_only=False,
+    file_filter=("*.build.cs",))
+
     SearchAndReplace(search_path=path, search_string='"Path.Combine(EngineDir, "Source", "ThirdParty",',
     replace_string='Path.Combine(ThirdPartyDir,',
     search_only=False,
@@ -185,6 +253,14 @@ if __name__ == "__main__":
     replace_string='Path.Combine(EngineSourceDir, @"Runtime/',
     search_only=False,
     file_filter=("*.build.cs",))
+
+    path = "./Engine/plugins/Online/OnlineSubsystemUtils/Source/OnlineSubSystemUtils"
+    SearchAndReplace(search_path=path, search_string='string RuntimePath = EnginePath + "Source/Runtime/";',
+    replace_string='string RuntimePath = EngineSourceDir + "Runtime/";',
+    search_only=False,
+    file_filter=("*.build.cs",))
+
+
     path = "./Engine/Source/Programs"
     SearchAndReplace(search_path=path, search_string='PrivateIncludePaths.Add("Programs/',
     replace_string='PrivateIncludePaths.Add(Target.UEProgramsSourceDirectory + "',
@@ -195,7 +271,17 @@ if __name__ == "__main__":
     search_only=False,
     file_filter=("*.build.cs",))
 
-    path = "./Engine/SourceNew/Runtime/Projects"
+    path = "./Engine/Source/ThirdParty"
+    SearchAndReplace(search_path=path, search_string='Target.Type == TargetType.Editor',
+    replace_string='Target.Type == TargetType.Editor || Target.Type == TargetType.App',
+    search_only=False,
+    file_filter=("*.build.cs",))
+    SearchAndReplace(search_path=path, search_string='Target.Type != TargetType.Editor',
+    replace_string='Target.Type != TargetType.Editor && Target.Type != TargetType.App',
+    search_only=False,
+    file_filter=("*.build.cs",))
+
+    path = "./Engine/Source/Runtime/Projects"
     SearchAndReplace(search_path=path, search_string='Target.Type == TargetType.Editor || Target.Type == TargetType.App',
     replace_string='Target.Type == TargetType.Editor',
     search_only=False,
@@ -205,12 +291,46 @@ if __name__ == "__main__":
 				PublicDefinitions.Add(String.Format("UBT_TARGET_BUILD_ALLPLUGINS={0}", Target.bBuildAllPlugins?1:0));''',
     search_only=False,
     file_filter=("*.build.cs",))
-   
-    path = "./Engine/SourceNew/Runtime/Projects/Private"
+    SearchAndReplace(search_path=path, search_string='PublicDefinitions.Add("READ_TARGET_ENABLED_PLUGINS_FROM_RECEIPT=1");',
+    replace_string='''PublicDefinitions.Add("READ_TARGET_ENABLED_PLUGINS_FROM_RECEIPT=1");
+				PublicDefinitions.Add(String.Format("UBT_TARGET_BUILD_ALLPLUGINS={0}", Target.bBuildAllPlugins ? 1 : 0));''',
+    search_only=False,
+    file_filter=("*.build.cs",))
+
+    path = "./Engine/Source/Runtime/Projects/Private"
     SearchAndReplace(search_path=path, search_string='bool bAllowEnginePluginsEnabledByDefault = true;',
     replace_string='bool bAllowEnginePluginsEnabledByDefault = (bool)(UBT_TARGET_BUILD_ALLPLUGINS);',
     search_only=False,
     file_filter=("*.*",))
+
+
+
+    path = "./Engine/Source/Runtime/AVEncoder"
+    SearchAndReplace(search_path=path, search_string='PublicSystemLibraries.Add("DXGI.lib");',
+    replace_string='''PublicSystemLibraries.Add("DXGI.lib");
+			PrivateIncludePaths.Add("Runtime/AVEncoder/Private/Microsoft/Windows/Thirdparty");''',
+    search_only=False,
+    file_filter=("*.build.cs",))
+
+
+    path = "./Engine/Build/Windows/Resources"
+    SearchAndReplace(search_path=path, search_string='''#include "../../../Source/''',
+    replace_string='''#include "''',
+    search_only=False,
+    file_filter=("*.rc2",))
+ 
+    path = "./Engine/Source/Runtime/Launch/Private"
+    SearchAndReplace(search_path=path, search_string='''		if(LaunchCorrectEditorExecutable(EditorTargetFileName))
+		{
+			return false;
+		}''',
+    replace_string='''		//if(LaunchCorrectEditorExecutable(EditorTargetFileName))
+		//{
+		//	return false;
+		//}''',
+    search_only=False,
+    file_filter=("LaunchEngineLoop.cpp",))
+
 
 
 
