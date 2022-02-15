@@ -31,7 +31,7 @@ UnreadEngine To  Application Develop Platform
   ![image](https://user-images.githubusercontent.com/5336757/153746762-63429b28-d2f7-45cf-925a-ed7a4e075362.png)
   
 * 修改新源码目录下的源码，得到你想要的应用。
-* 
+* 控制台运行 GenerateProjectFilesNew.bat 新源码目录名 sln文件名，得到新的工程。
 ## 注意事项
   原本的UnrealEditor目标默认是编译所有模块及插件的，十分耗费时间。为了减少编译时间，在TestApp.build.cs里 设置了	bBuildAllModules = false;
   并修改了ubt内部代码，使新目标默认是只加载相关模块。
