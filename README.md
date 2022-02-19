@@ -31,12 +31,13 @@ UnreadEngine To  Application Develop Platform
   ![image](https://user-images.githubusercontent.com/5336757/153746762-63429b28-d2f7-45cf-925a-ed7a4e075362.png)
   
 * 修改新源码目录下的源码，得到你想要的应用。
-* 
+* 控制台运行 GenerateProjectFilesNew.bat 新源码目录名 sln文件名，得到新的工程。
 ## 注意事项
   原本的UnrealEditor目标默认是编译所有模块及插件的，十分耗费时间。为了减少编译时间，在TestApp.build.cs里 设置了	bBuildAllModules = false;
   并修改了ubt内部代码，使新目标默认是只加载相关模块。
   新添加了一种加载插件的方式。通过设置bBuildAllPlugins = false; 目标会不一下加载所有插件。而是通过给 EnablePlugins这个变量容器添加插件名 来指定需要加载的插件。
   比如当编辑器打开 uproject工程时，一般会要求编辑器程序中包含 uproject里设置的插件模块。这时可以通过在TestApp.build.cs中添加 给 EnablePlugins 添加模块来解决这个问题。
+  .uproject文件里需添加	"DisableEnginePluginsByDefault": true, "Plugins" 字段设置的插件必须包含在 EnablePlugins 里，不然会报无法找到插件的错误。
   即可以选择像原有的一样加载所有插件，也可以指定需要的一些插件加载，减少编译时间。这个地方根据自己的需要进行修改。
   
   ![image](https://user-images.githubusercontent.com/5336757/153750442-fd4f5d09-a000-4565-a536-a759e97d06d6.png)
