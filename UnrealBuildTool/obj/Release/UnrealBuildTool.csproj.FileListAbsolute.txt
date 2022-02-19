@@ -1,3 +1,0 @@
-D:\Github\UnrealEngine-5.0.0-early-access-2\Engine\Source\Programs\UnrealBuildTool\obj\Release\UnrealBuildTool.csproj.AssemblyReference.cache
-D:\Github\UnrealEngine-5.0.0-early-access-2\Engine\Source\Programs\UnrealBuildTool\obj\Release\UnrealBuildTool.GeneratedMSBuildEditorConfig.editorconfig
-D:\Github\UnrealEngine-5.0.0-early-access-2\Engine\Source\Programs\UnrealBuildTool\obj\Release\UnrealBuildTool.csproj.CoreCompileInputs.cache

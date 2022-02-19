@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "UnrealBuildTool": {
-      "commandName": "Project",
-      "commandLineArgs": "-Target=\"TestApp Win64 Debug\"  -WaitMutex -FromMsBuild -SourceDir=\"D:\\Github\\UnrealEngine-5.0.0-early-access-2\\Engine\\Source2\""
-    }
-  }
-}
