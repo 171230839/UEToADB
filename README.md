@@ -21,7 +21,7 @@ UnreadEngine To  Application Development Base
   主要是修改模块设置文件（*build.cs）里的目录引用路径。
 
   
-*（UE5) 使用控制台运行 GenerateProjectFilesNew.bat, （新源码目录名和sln文件名），就会在 Engine 目录下 创建一个新源码目录，将 Runtime，Develop， Editor 三个目录拷贝复制过去，并生成新的sln。
+* (UE5) 使用控制台运行 GenerateProjectFilesNew.bat, （新源码目录名和sln文件名），就会在 Engine 目录下 创建一个新源码目录，将 Runtime，Develop， Editor 三个目录拷贝复制过去，并生成新的sln。
 * (UE4) 使用控制台运行 GenerateProjectFilesNewUE4.bat, （新源码目录名和sln文件名），就会在 Engine 目录下 创建一个新源码目录，将 Runtime，Develop， Editor 三个目录拷贝复制过去，并生成新的sln。
 
 ![image](https://user-images.githubusercontent.com/5336757/153746555-c5210cb5-1097-4e47-b146-978a2828cbb3.png)
