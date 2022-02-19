@@ -1,8 +1,15 @@
-
 # -*- coding:utf8 -*-
 
 
-import os, re, time, fnmatch, difflib
+import os, re, time, fnmatch, difflib, sys
+from chardet import detect
+
+# get file encoding type
+def get_encoding_type(file):
+    with open(file, 'rb') as f:
+        rawdata = f.read()
+    return detect(rawdata)['encoding']
+
 
 RE_TYPE = type(re.compile(""))
 class SearchAndReplace(object):
@@ -38,7 +45,7 @@ class SearchAndReplace(object):
             file_count += 1
     return file_count
   def search_file(self, filepath):
-    f = open(filepath, "r")
+    f = open(filepath, "r", encoding=get_encoding_type(filepath) ,errors="ignore")
     old_content = f.read()
     f.close()
     if self.is_re or self.search_string in old_content:
@@ -112,8 +119,11 @@ class SearchAndReplace(object):
 if __name__ == "__main__":
     sourceDir = "./Engine/Source";
     dirList = ["Runtime", "Developer", "Editor"]
+
     for i in range(0, len(dirList)):
         path = os.path.join(sourceDir, dirList[i])
+
+      
         SearchAndReplace(search_path=path, search_string='PrivateIncludePaths.Add( "ThirdParty/',
         replace_string='PrivateIncludePaths.Add( Target.UEThirdPartySourceDirectory + "',
         search_only=False,
@@ -127,9 +137,15 @@ if __name__ == "__main__":
         search_only=False,
         file_filter=("*.build.cs",))
         SearchAndReplace(search_path=path, search_string='Target.Type != TargetType.Editor',
-        replace_string='Target.Type != TargetType.Editor && Target.Type != TargetType.App',
+        replace_string='(Target.Type != TargetType.Editor && Target.Type != TargetType.App)',
         search_only=False,
         file_filter=("*.build.cs",))
+        SearchAndReplace(search_path=path, search_string='((Target.Type != TargetType.Editor && Target.Type != TargetType.App) && Target.Type != TargetType.App)',
+        replace_string='(Target.Type != TargetType.Editor && Target.Type != TargetType.App)',
+        search_only=False,
+        file_filter=("*.build.cs",))
+
+
         SearchAndReplace(search_path=path, search_string='PublicIncludePaths.Add("Programs/',
         replace_string='PublicIncludePaths.Add(Target.UEProgramsSourceDirectory + "',
         search_only=False,
@@ -139,17 +155,19 @@ if __name__ == "__main__":
         search_only=False,
         file_filter=("*.build.cs",))
         SearchAndReplace(search_path=path, search_string='Target.Type == TargetType.Editor',
-        replace_string='Target.Type == TargetType.Editor || Target.Type == TargetType.App',
+        replace_string='(Target.Type == TargetType.Editor || Target.Type == TargetType.App)',
         search_only=False,
         file_filter=("*.build.cs",))
-        SearchAndReplace(search_path=path, search_string='Target.Type == TargetType.Editor || Target.Type == TargetType.App || Target.Type == TargetType.App',
-        replace_string='Target.Type == TargetType.Editor || Target.Type == TargetType.App',
-        search_only=False,
-        file_filter=("*.build.cs",))
+     
         SearchAndReplace(search_path=path, search_string='#include "ThirdParty/',
         replace_string='#include "',
         search_only=False,
-        file_filter=("*.*",))        
+        file_filter=("*.cpp", "*.h"))      
+        SearchAndReplace(search_path=path, search_string='#include "../../../ThirdParty/',
+        replace_string='#include "',
+        search_only=False,
+        file_filter=("*.cpp", "*.h"))    
+     
         SearchAndReplace(search_path=path, search_string='Path.Combine(EnginePath, "Source/',
         replace_string='Path.Combine(EngineSourceDir, "',
         search_only=False,
@@ -159,7 +177,11 @@ if __name__ == "__main__":
         search_only=False,
         file_filter=("*.build.cs",))   
         SearchAndReplace(search_path=path, search_string='Target.Type == TargetRules.TargetType.Editor',
-        replace_string='Target.Type == TargetType.Editor || Target.Type == TargetType.App',
+        replace_string='(Target.Type == TargetType.Editor || Target.Type == TargetType.App)',
+        search_only=False,
+        file_filter=("*.build.cs",))
+        SearchAndReplace(search_path=path, search_string='((Target.Type == TargetType.Editor || Target.Type == TargetType.App) || Target.Type == TargetType.App)',
+        replace_string='(Target.Type == TargetType.Editor || Target.Type == TargetType.App)',
         search_only=False,
         file_filter=("*.build.cs",))
 
@@ -188,12 +210,18 @@ if __name__ == "__main__":
     file_filter=("*.build.cs",))
 
     SearchAndReplace(search_path=path, search_string='Target.Type == TargetType.Editor',
-    replace_string='Target.Type == TargetType.Editor || Target.Type == TargetType.App',
+    replace_string='(Target.Type == TargetType.Editor || Target.Type == TargetType.App)',
     search_only=False,
     file_filter=("*.build.cs",))
 
+
     SearchAndReplace(search_path=path, search_string='Target.Type == TargetRules.TargetType.Editor',
-    replace_string='Target.Type == TargetType.Editor || Target.Type == TargetType.App',
+    replace_string='(Target.Type == TargetType.Editor || Target.Type == TargetType.App)',
+    search_only=False,
+    file_filter=("*.build.cs",))
+
+    SearchAndReplace(search_path=path, search_string='((Target.Type == TargetType.Editor || Target.Type == TargetType.App) || Target.Type == TargetType.App)',
+    replace_string='(Target.Type == TargetType.Editor || Target.Type == TargetType.App)',
     search_only=False,
     file_filter=("*.build.cs",))
 
@@ -273,35 +301,58 @@ if __name__ == "__main__":
 
     path = "./Engine/Source/ThirdParty"
     SearchAndReplace(search_path=path, search_string='Target.Type == TargetType.Editor',
-    replace_string='Target.Type == TargetType.Editor || Target.Type == TargetType.App',
+    replace_string='(Target.Type == TargetType.Editor || Target.Type == TargetType.App)',
+    search_only=False,
+    file_filter=("*.build.cs",))
+    SearchAndReplace(search_path=path, search_string='((Target.Type == TargetType.Editor || Target.Type == TargetType.App) || Target.Type == TargetType.App)',
+    replace_string='(Target.Type == TargetType.Editor || Target.Type == TargetType.App)',
     search_only=False,
     file_filter=("*.build.cs",))
     SearchAndReplace(search_path=path, search_string='Target.Type != TargetType.Editor',
-    replace_string='Target.Type != TargetType.Editor && Target.Type != TargetType.App',
+    replace_string='(Target.Type != TargetType.Editor && Target.Type != TargetType.App)',
+    search_only=False,
+    file_filter=("*.build.cs",))
+    SearchAndReplace(search_path=path, search_string='((Target.Type != TargetType.Editor && Target.Type != TargetType.App) && Target.Type != TargetType.App)',
+    replace_string='(Target.Type != TargetType.Editor && Target.Type != TargetType.App)',
     search_only=False,
     file_filter=("*.build.cs",))
 
     path = "./Engine/Source/Runtime/Projects"
-    SearchAndReplace(search_path=path, search_string='Target.Type == TargetType.Editor || Target.Type == TargetType.App',
-    replace_string='Target.Type == TargetType.Editor',
-    search_only=False,
-    file_filter=("*.build.cs",))
+  
+
     SearchAndReplace(search_path=path, search_string='PrivateDefinitions.Add(String.Format("UBT_TARGET_ENABLED_PLUGINS={0}", String.Join(", ", EnabledPluginStrings)));',
     replace_string='''PrivateDefinitions.Add(String.Format("UBT_TARGET_ENABLED_PLUGINS={0}", String.Join(", ", EnabledPluginStrings))); 
 				PublicDefinitions.Add(String.Format("UBT_TARGET_BUILD_ALLPLUGINS={0}", Target.bBuildAllPlugins?1:0));''',
     search_only=False,
-    file_filter=("*.build.cs",))
+    file_filter=("Projects.build.cs",))
+    SearchAndReplace(search_path=path, search_string='''PrivateDefinitions.Add(String.Format("UBT_TARGET_ENABLED_PLUGINS={0}", String.Join(", ", EnabledPluginStrings))); 
+				PublicDefinitions.Add(String.Format("UBT_TARGET_BUILD_ALLPLUGINS={0}", Target.bBuildAllPlugins?1:0)); 
+				PublicDefinitions.Add(String.Format("UBT_TARGET_BUILD_ALLPLUGINS={0}", Target.bBuildAllPlugins?1:0));''',
+    replace_string='''PrivateDefinitions.Add(String.Format("UBT_TARGET_ENABLED_PLUGINS={0}", String.Join(", ", EnabledPluginStrings))); 
+				PublicDefinitions.Add(String.Format("UBT_TARGET_BUILD_ALLPLUGINS={0}", Target.bBuildAllPlugins?1:0));''',
+    search_only=False,
+    file_filter=("Projects.build.cs",))
+
+
     SearchAndReplace(search_path=path, search_string='PublicDefinitions.Add("READ_TARGET_ENABLED_PLUGINS_FROM_RECEIPT=1");',
     replace_string='''PublicDefinitions.Add("READ_TARGET_ENABLED_PLUGINS_FROM_RECEIPT=1");
 				PublicDefinitions.Add(String.Format("UBT_TARGET_BUILD_ALLPLUGINS={0}", Target.bBuildAllPlugins ? 1 : 0));''',
     search_only=False,
-    file_filter=("*.build.cs",))
+    file_filter=("Projects.build.cs",))
+    SearchAndReplace(search_path=path, search_string='''PublicDefinitions.Add("READ_TARGET_ENABLED_PLUGINS_FROM_RECEIPT=1");
+				PublicDefinitions.Add(String.Format("UBT_TARGET_BUILD_ALLPLUGINS={0}", Target.bBuildAllPlugins ? 1 : 0));
+				PublicDefinitions.Add(String.Format("UBT_TARGET_BUILD_ALLPLUGINS={0}", Target.bBuildAllPlugins ? 1 : 0));''',
+    replace_string='''PublicDefinitions.Add("READ_TARGET_ENABLED_PLUGINS_FROM_RECEIPT=1");
+				PublicDefinitions.Add(String.Format("UBT_TARGET_BUILD_ALLPLUGINS={0}", Target.bBuildAllPlugins ? 1 : 0));''',
+    search_only=False,
+    file_filter=("Projects.build.cs",))
+
 
     path = "./Engine/Source/Runtime/Projects/Private"
     SearchAndReplace(search_path=path, search_string='bool bAllowEnginePluginsEnabledByDefault = true;',
     replace_string='bool bAllowEnginePluginsEnabledByDefault = (bool)(UBT_TARGET_BUILD_ALLPLUGINS);',
     search_only=False,
-    file_filter=("*.*",))
+    file_filter=("PluginManager.cpp",))
 
 
 

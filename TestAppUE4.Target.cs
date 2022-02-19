@@ -3,9 +3,9 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class TestAppTarget : TargetRules
+public class TestAppUE4Target : TargetRules
 {
-	public TestAppTarget( TargetInfo Target ) : base(Target)
+	public TestAppUE4Target( TargetInfo Target ) : base(Target)
 	{
 		Type = TargetType.App;
 		BuildEnvironment = TargetBuildEnvironment.Shared;
@@ -15,11 +15,10 @@ public class TestAppTarget : TargetRules
 	
 		bBuildAllModules = false;
 		bBuildAllPlugins = false;
-		ExtraModuleNames.Add("UnrealGame");
+		ExtraModuleNames.Add("UE4Game");
 		WindowsPlatform.bUseBundledDbgHelp = false;
 
 
-        EnablePlugins.Add("InterChange");
         EnablePlugins.Add("SunPosition");
         EnablePlugins.Add("DataPrepEditor");
         EnablePlugins.Add("DatasmithImporter");
