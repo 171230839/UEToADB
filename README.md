@@ -1,25 +1,32 @@
-# UEToADP
-UnreadEngine To  Application Develop Platform
+# UEToADB
+UnreadEngine To  Application Development Base
 
 ## 目的
-通过修改 虚幻引擎的 一些代码， 将其改造成一个便于开发3d应用的平台。比如说带3d的一些设计应用。一般情况下，只需要修改虚幻引擎的源码中source文件夹的一部分模块，就可以实现一个新的3d应用，但虚幻引擎本身很笨重，十分占用硬盘空间。如果每创建一个应用就创建一个新的虚幻引擎源码目录，实在是太浪费硬盘空间。这个项目就是为了解决这个问题，在复用所有不需要修改的内容的情况下，创建新的工程。
+通过修改 虚幻引擎的 一些代码， 将其改造成一个便于开发3d应用的基础。比如说带3d的一些设计应用。一般情况下，只需要修改虚幻引擎的源码中source文件夹的一部分模块，就可以实现一个新的3d应用，但虚幻引擎本身很笨重，十分占用硬盘空间。如果每创建一个应用就创建一个新的虚幻引擎源码目录，实在是太浪费硬盘空间。还有就是对照正常的unrealEditor进行比较，方便查找问题。这个项目就是为了解决这个问题，在复用所有不需要修改的内容的情况下，既不影响原有的工程，又能不断创建新的工程。
 
-最终到达的效果是，控制调用脚本（GenerateProjectFilesNew.bat) 传入2个参数（新源码目录名和sln文件名），就会在 Engine 目录下 创建一个新源码目录，并将 Runtime，Develop， Editor 三个目录拷贝复制过去，并生成新的sln。打开sln后就可以得到一个新的默认应用。
+最终到达的效果是，控制调用脚本（GenerateProjectFilesNew.bat) 传入2个参数（新源码目录名和sln文件名），就会在 Engine 目录下 创建一个新源码目录，并将 Runtime，Develop， Editor 三个目录拷贝复制过去，并生成新的工程。打开工程后就可以得到一个新的默认应用。这个默认应用会共享原Source目录下的Programs和ThirdParty,以及Engine/Plugins 目录下的插件。通过Target.cs文件的设置（	bBuildAllModules = false;bBuildAllPlugins = false;）, 这个应用只会加载所需模块，以及指定的插件。使用注意有详细介绍。
 
-## 使用步骤 （windows下使用 vs2019 以及 ue5 源码 的示例)
-* 按照虚幻引擎官方教程，下载源码。运行setup.bat安装依赖。
+## 支持平台
+* windows
+## 测试通过版本 (vs2019)
+* UnrealEngine-4.27.2-release
+* UnrealEngine-5.0.0-early-access-2
 
-* 拷贝覆盖本仓库UnrealBuildTool文件夹到 /Engine/Source/Programs/UnrealBuildTool.
-  主要改动都在ubt里面，使用ue5代码做的测试。其他版本可参照修改。
+## 使用步骤 （windows）
+* 准备：按照虚幻引擎官方教程，下载源码。运行setup.bat安装依赖。安装python3.
+* 把本仓库所有文件放到源码根目录下。
+* 运行python changeUBT.py, 使用字符串替换的方式修改 UBT这个工具的源码。
+  添加了一个新的目标类型App, 通过传入参数的方式设置新的工程目录。然后让UBT能正确的加载模块。
+* 运行python changeSource.py, 使用字符串替换的方式修改 Source目录及Plugins目录下的部分文件内容。
+  主要是修改模块设置文件（*build.cs）里的目录引用路径。
 
-* 其他文件放到 Engine 同级目录下， 使用控制台 运行 python changeSource.py.
-  这个脚本会对Engine目录下的源码进行一次行的修改。 主要是修改模块设置文件（*build.cs）里的目录引用路径。
   
-* 使用控制台运行 GenerateProjectFilesNew.bat, （新源码目录名和sln文件名），就会在 Engine 目录下 创建一个新源码目录，并将 Runtime，Develop， Editor 三个目录拷贝复制过去，并生成新的sln。
+* (UE5) 使用控制台运行 GenerateProjectFilesNew.bat, （新源码目录名和sln文件名），就会在 Engine 目录下 创建一个新源码目录，将 Runtime，Develop， Editor 三个目录拷贝复制过去，并生成新的sln。
+* (UE4) 使用控制台运行 GenerateProjectFilesNewUE4.bat, （新源码目录名和sln文件名），就会在 Engine 目录下 创建一个新源码目录，将 Runtime，Develop， Editor 三个目录拷贝复制过去，并生成新的sln。
 
 ![image](https://user-images.githubusercontent.com/5336757/153746555-c5210cb5-1097-4e47-b146-978a2828cbb3.png)
   
-* 如果没有报错，结果如下图就是成功了
+* 一切顺利如下图
 
 ![image](https://user-images.githubusercontent.com/5336757/153746634-9c9fac70-b5fc-4ab9-8d9c-8c9f3f360c53.png)
 ![image](https://user-images.githubusercontent.com/5336757/153749630-86758665-a360-49ac-bd29-2a8f8aff4027.png)
@@ -31,7 +38,7 @@ UnreadEngine To  Application Develop Platform
   ![image](https://user-images.githubusercontent.com/5336757/153746762-63429b28-d2f7-45cf-925a-ed7a4e075362.png)
   
 * 修改新源码目录下的源码，得到你想要的应用。
-* 控制台运行 GenerateProjectFilesNew.bat 新源码目录名 sln文件名，得到新的工程。
+* 控制台运行 GenerateProjectFilesNew.bat或GenerateProjectFilesNewUE4.bat  新源码目录名 sln文件名，得到新的工程。
 ## 注意事项
   原本的UnrealEditor目标默认是编译所有模块及插件的，十分耗费时间。为了减少编译时间，在TestApp.build.cs里 设置了	bBuildAllModules = false;
   并修改了ubt内部代码，使新目标默认是只加载相关模块。
