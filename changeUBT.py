@@ -363,10 +363,48 @@ if __name__ == "__main__":
 					break;''',
         search_only=False,
         file_filter=("UEBuildTarget.cs",))
-    SearchAndReplace(search_path=path, search_string='''				case TargetType.Server:
-					BaseTargetName = "UE4Server";
+    SearchAndReplace(search_path=path, search_string='''case TargetType.Server:
+					BaseTargetName = "UnrealServer";
+					break;
+				case TargetType.App:
+					BaseTargetName = ThisTargetName;
+					break;
+				case TargetType.App:
+					BaseTargetName = ThisTargetName;
 					break;''',
-        replace_string='''				case TargetType.Server:
+        replace_string='''case TargetType.Server:
+					BaseTargetName = "UnrealServer";
+					break;
+				case TargetType.App:
+					BaseTargetName = ThisTargetName;
+					break;''',
+        search_only=False,
+        file_filter=("UEBuildTarget.cs",))
+
+
+
+    SearchAndReplace(search_path=path, search_string='''case TargetType.Server:
+					BaseTargetName = "Un4Server";
+					break;''',
+        replace_string='''case TargetType.Server:
+					BaseTargetName = "Un4Server";
+					break;
+				case TargetType.App:
+					BaseTargetName = ThisTargetName;
+					break;''',
+        search_only=False,
+        file_filter=("UEBuildTarget.cs",))
+
+    SearchAndReplace(search_path=path, search_string='''case TargetType.Server:
+					BaseTargetName = "Un4Server";
+					break;
+				case TargetType.App:
+					BaseTargetName = ThisTargetName;
+					break;
+				case TargetType.App:
+					BaseTargetName = ThisTargetName;
+					break;''',
+        replace_string='''case TargetType.Server:
 					BaseTargetName = "Un4Server";
 					break;
 				case TargetType.App:
